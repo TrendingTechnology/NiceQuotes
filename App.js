@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 
 export default class App extends Component {
   render() {
@@ -10,6 +10,7 @@ export default class App extends Component {
           entstanden sind.
         </Text>
         <Text>-- Albert Einstein</Text>
+        <Button title="Nächstes Zitat" onPress={() => alert('Es klappt!')} />
       </View>
     );
   }
