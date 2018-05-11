@@ -17,13 +17,11 @@ const data = [
 
 export default class App extends Component {
   render() {
+    const quote = data[0];
     return (
       <View style={styles.container}>
-        <Text>
-          Probleme kann man niemals mit derselben Denkweise lösen, durch die sie
-          entstanden sind.
-        </Text>
-        <Text>-- Albert Einstein</Text>
+        <Text>{quote.text}</Text>
+        <Text>-- {quote.author}</Text>
         <Button title="Nächstes Zitat" onPress={() => alert('Es klappt!')} />
       </View>
     );
