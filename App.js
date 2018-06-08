@@ -16,8 +16,11 @@ const data = [
 ];
 
 export default class App extends Component {
+  state = { index: 0 }; // initialer Zustand
+
   render() {
-    const quote = data[0];
+    let index = this.state.index;
+    const quote = data[index];
     return (
       <View style={styles.container}>
         <Text>{quote.text}</Text>
