@@ -24,6 +24,7 @@ export default class App extends Component {
   // render wird automatisch ausgeführt:
   // a) Komponente erscheint im UI (initialer Zustand in state)
   // b) Zustand ändert sich (state) [ ==> this.setState(...)]
+  // c) props sich ändern
   render() {
     let index = this.state.index;
     const quote = data[index];
@@ -31,8 +32,6 @@ export default class App extends Component {
     if (nextIndex === data.length) nextIndex = 0;
     return (
       <View style={styles.container}>
-        <Text>{quote.text}</Text>
-        <Text>-- {quote.author}</Text>
         <Quote text={quote.text} author={quote.author} />
         <Button
           title="Nächstes Zitat"
