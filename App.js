@@ -25,13 +25,15 @@ export default class App extends Component {
   render() {
     let index = this.state.index;
     const quote = data[index];
+    let nextIndex = index + 1;
+    if (nextIndex === data.length) nextIndex = 0;
     return (
       <View style={styles.container}>
         <Text>{quote.text}</Text>
         <Text>-- {quote.author}</Text>
         <Button
           title="Nächstes Zitat"
-          onPress={() => this.setState({ index: 1 })}
+          onPress={() => this.setState({ index: nextIndex })}
         />
       </View>
     );
