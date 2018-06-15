@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
 
 import Quote from './js/components/Quote';
 
@@ -18,13 +18,8 @@ const data = [
 ];
 
 export default class App extends Component {
-  state = { index: 0 }; // initialer Zustand
+  state = { index: 0 };
 
-  // render: Darstellung der Komponente im UI
-  // render wird automatisch ausgeführt:
-  // a) Komponente erscheint im UI (initialer Zustand in state)
-  // b) Zustand ändert sich (state) [ ==> this.setState(...)]
-  // c) props sich ändern
   render() {
     let index = this.state.index;
     const quote = data[index];
