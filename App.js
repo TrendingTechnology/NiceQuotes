@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
+import Quote from './js/components/Quote';
+
 const data = [
   {
     text:
@@ -31,6 +33,7 @@ export default class App extends Component {
       <View style={styles.container}>
         <Text>{quote.text}</Text>
         <Text>-- {quote.author}</Text>
+        <Quote text={quote.text} author={quote.author} />
         <Button
           title="Nächstes Zitat"
           onPress={() => this.setState({ index: nextIndex })}
