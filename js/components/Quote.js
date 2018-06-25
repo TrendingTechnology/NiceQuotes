@@ -5,8 +5,18 @@ export default function Quote(props) {
   const { text, author } = props;
   return (
     <Fragment>
-      <Text style={{ fontSize: 36, fontStyle: 'italic' }}>{text}</Text>
-      <Text style={{ fontSize: 20 }}>&mdash; {author}</Text>
+      <Text style={styles.text}>{text}</Text>
+      <Text style={styles.author}>&mdash; {author}</Text>
     </Fragment>
   );
 }
+
+const styles = {
+  text: {
+    fontSize: 36,
+    fontStyle: 'italic'
+  },
+  author: {
+    fontSize: 20
+  }
+};
