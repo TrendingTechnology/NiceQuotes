@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Text } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 
 export default function Quote(props) {
   const { text, author } = props;
@@ -11,7 +11,7 @@ export default function Quote(props) {
   );
 }
 
-const styles = {
+const styles = StyleSheet.create({
   text: {
     fontSize: 36,
     fontStyle: 'italic'
@@ -19,4 +19,4 @@ const styles = {
   author: {
     fontSize: 20
   }
-};
+});
