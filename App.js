@@ -27,8 +27,11 @@ export default class App extends Component {
     if (nextIndex === data.length) nextIndex = 0;
     return (
       <View style={styles.container}>
+        <View style={styles.newButton}>
+          <Button title="Neu" onPress={() => alert('Neues Zitat')} />
+        </View>
         <Quote text={quote.text} author={quote.author} />
-        <View style={styles.button}>
+        <View style={styles.nextButton}>
           <Button
             title="Nächstes Zitat"
             onPress={() => this.setState({ index: nextIndex })}
@@ -46,8 +49,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  button: {
+  nextButton: {
     position: 'absolute',
     bottom: 0
+  },
+  newButton: {
+    position: 'absolute',
+    right: 0,
+    top: 30
   }
 });
