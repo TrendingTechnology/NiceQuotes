@@ -6,6 +6,6 @@ export default class NewQuote extends Component {
     if (this.props.visible === false) {
       return null;
     }
-    return <Button title="Speichern" onPress={() => alert('OK')} />;
+    return <Button title="Speichern" onPress={this.props.onSave} />;
   }
 }

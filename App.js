@@ -21,6 +21,11 @@ const data = [
 export default class App extends Component {
   state = { index: 0, showNewQuoteScreen: false };
 
+  _addQuote = () => {
+    // NewQuote ausblenden
+    this.setState({ showNewQuoteScreen: false });
+  };
+
   render() {
     let index = this.state.index;
     const quote = data[index];
@@ -34,7 +39,10 @@ export default class App extends Component {
             onPress={() => this.setState({ showNewQuoteScreen: true })}
           />
         </View>
-        <NewQuote visible={this.state.showNewQuoteScreen} />
+        <NewQuote
+          visible={this.state.showNewQuoteScreen}
+          onSave={this._addQuote}
+        />
         <Quote text={quote.text} author={quote.author} />
         <View style={styles.nextButton}>
           <Button
