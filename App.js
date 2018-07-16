@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, StyleSheet, View } from 'react-native';
 
 import Quote from './js/components/Quote';
+import NewQuote from './js/components/NewQuote';
 
 const data = [
   {
@@ -18,7 +19,7 @@ const data = [
 ];
 
 export default class App extends Component {
-  state = { index: 0 };
+  state = { index: 0, showNewQuoteScreen: false };
 
   render() {
     let index = this.state.index;
@@ -28,8 +29,12 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.newButton}>
-          <Button title="Neu" onPress={() => alert('Neues Zitat')} />
+          <Button
+            title="Neu"
+            onPress={() => this.setState({ showNewQuoteScreen: true })}
+          />
         </View>
+        <NewQuote visible={this.state.showNewQuoteScreen} />
         <Quote text={quote.text} author={quote.author} />
         <View style={styles.nextButton}>
           <Button
