@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal, TextInput } from 'react-native';
+import { Button, Modal, StyleSheet, TextInput, View } from 'react-native';
 
 export default class NewQuote extends Component {
   render() {
@@ -9,8 +9,18 @@ export default class NewQuote extends Component {
         onRequestClose={this.props.onSave}
         animationType="slide"
       >
-        <Button title="Speichern" onPress={this.props.onSave} />
+        <View style={styles.container}>
+          <Button title="Speichern" onPress={this.props.onSave} />
+        </View>
       </Modal>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+});
