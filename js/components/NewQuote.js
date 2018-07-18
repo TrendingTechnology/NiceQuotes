@@ -11,7 +11,8 @@ export default class NewQuote extends Component {
       >
         <View style={styles.container}>
           <TextInput
-            style={styles.input}
+            style={[styles.input, { height: 150 }]}
+            multiline={true}
             placeholder="Inhalt des Zitats"
             underlineColorAndroid="transparent"
           />
@@ -31,7 +32,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'flex-start',
+    paddingTop: 40
   },
   input: {
     borderWidth: 1,
