@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Button, Modal, StyleSheet, TextInput, View } from 'react-native';
 
 export default class NewQuote extends Component {
+  state = { content: null, author: null };
+
   render() {
     return (
       <Modal
@@ -15,11 +17,13 @@ export default class NewQuote extends Component {
             multiline={true}
             placeholder="Inhalt des Zitats"
             underlineColorAndroid="transparent"
+            onChangeText={text => this.setState({ content: text })}
           />
           <TextInput
             style={styles.input}
             placeholder="Autor/in des Zitats"
             underlineColorAndroid="transparent"
+            onChangeText={text => this.setState({ author: text })}
           />
           <Button title="Speichern" onPress={this.props.onSave} />
         </View>
