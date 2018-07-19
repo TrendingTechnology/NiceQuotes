@@ -19,18 +19,21 @@ const data = [
 ];
 
 export default class App extends Component {
-  state = { index: 0, showNewQuoteScreen: false };
+  state = { index: 0, showNewQuoteScreen: false, quotes: data };
 
-  _addQuote = () => {
-    // NewQuote ausblenden
-    this.setState({ showNewQuoteScreen: false });
+  _addQuote = (text, author) => {
+    let { quotes } = this.state;
+    if (text && author) {
+      quotes.push({ text, author });
+    }
+    this.setState({ showNewQuoteScreen: false, quotes });
   };
 
   render() {
-    let index = this.state.index;
-    const quote = data[index];
+    let { index, quotes } = this.state;
+    const quote = quotes[index];
     let nextIndex = index + 1;
-    if (nextIndex === data.length) nextIndex = 0;
+    if (nextIndex === quotes.length) nextIndex = 0;
     return (
       <View style={styles.container}>
         <View style={styles.newButton}>
