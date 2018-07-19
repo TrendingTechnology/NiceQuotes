@@ -8,7 +8,14 @@ export default class NewQuote extends Component {
     const { visible, onSave } = this.props;
     const { content, author } = this.state;
     return (
-      <Modal visible={visible} onRequestClose={onSave} animationType="slide">
+      <Modal
+        visible={visible}
+        onRequestClose={() => {
+          this.setState({ content: null, author: null });
+          onSave(null, null);
+        }}
+        animationType="slide"
+      >
         <View style={styles.container}>
           <TextInput
             style={[styles.input, { height: 150 }]}
@@ -23,7 +30,13 @@ export default class NewQuote extends Component {
             underlineColorAndroid="transparent"
             onChangeText={text => this.setState({ author: text })}
           />
-          <Button title="Speichern" onPress={() => onSave(content, author)} />
+          <Button
+            title="Speichern"
+            onPress={() => {
+              this.setState({ content: null, author: null });
+              onSave(content, author);
+            }}
+          />
         </View>
       </Modal>
     );
