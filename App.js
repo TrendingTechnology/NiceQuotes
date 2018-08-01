@@ -21,6 +21,15 @@ const data = [
 export default class App extends Component {
   state = { index: 0, showNewQuoteScreen: false, quotes: data };
 
+  _retrieveData() {
+    AsyncStorage.getItem('QUOTES').then(value => {
+      if (value !== null) {
+        value = JSON.parse(value);
+        this.setState({ quotes: value });
+      }
+    });
+  }
+
   _storeData(quotes) {
     AsyncStorage.setItem('QUOTES', JSON.stringify(quotes));
   }
@@ -29,7 +38,7 @@ export default class App extends Component {
     let { quotes } = this.state;
     if (text && author) {
       quotes.push({ text, author });
-      this._storeData(this.state.quotes);
+      this._storeData(quotes);
     }
     this.setState({ showNewQuoteScreen: false, quotes });
   };
