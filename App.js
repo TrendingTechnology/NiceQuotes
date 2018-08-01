@@ -21,14 +21,13 @@ const data = [
 export default class App extends Component {
   state = { index: 0, showNewQuoteScreen: false, quotes: data };
 
-  _retrieveData() {
-    AsyncStorage.getItem('QUOTES').then(value => {
-      if (value !== null) {
-        value = JSON.parse(value);
-        this.setState({ quotes: value });
-      }
-    });
-  }
+  _retrieveData = async () => {
+    let value = await AsyncStorage.getItem('QUOTES');
+    if (value !== null) {
+      value = JSON.parse(value);
+      this.setState({ quotes: value });
+    }
+  };
 
   _storeData(quotes) {
     AsyncStorage.setItem('QUOTES', JSON.stringify(quotes));
