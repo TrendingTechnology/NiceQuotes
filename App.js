@@ -42,6 +42,10 @@ export default class App extends Component {
     this.setState({ showNewQuoteScreen: false, quotes });
   };
 
+  componentDidMount() {
+    this._retrieveData();
+  }
+
   render() {
     let { index, quotes } = this.state;
     const quote = quotes[index];
