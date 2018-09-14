@@ -4,6 +4,14 @@ import { AsyncStorage, Button, StyleSheet, View } from 'react-native';
 import Quote from './js/components/Quote';
 import NewQuote from './js/components/NewQuote';
 
+function StyledButton(props) {
+  return (
+    <View style={props.style}>
+      <Button title={props.title} onPress={props.onPress} />
+    </View>
+  );
+}
+
 const data = [
   {
     text:
@@ -53,23 +61,21 @@ export default class App extends Component {
     if (nextIndex === quotes.length) nextIndex = 0;
     return (
       <View style={styles.container}>
-        <View style={styles.newButton}>
-          <Button
-            title="Neu"
-            onPress={() => this.setState({ showNewQuoteScreen: true })}
-          />
-        </View>
+        <StyledButton
+          style={styles.newButton}
+          title="Neu"
+          onPress={() => this.setState({ showNewQuoteScreen: true })}
+        />
         <NewQuote
           visible={this.state.showNewQuoteScreen}
           onSave={this._addQuote}
         />
         <Quote text={quote.text} author={quote.author} />
-        <View style={styles.nextButton}>
-          <Button
-            title="Nächstes Zitat"
-            onPress={() => this.setState({ index: nextIndex })}
-          />
-        </View>
+        <StyledButton
+          style={styles.nextButton}
+          title="Nächstes Zitat"
+          onPress={() => this.setState({ index: nextIndex })}
+        />
       </View>
     );
   }
