@@ -47,7 +47,11 @@ export default class App extends Component {
       quotes.push({ text, author });
       this._storeData(quotes);
     }
-    this.setState({ showNewQuoteScreen: false, quotes });
+    this.setState({
+      index: quotes.length - 1,
+      showNewQuoteScreen: false,
+      quotes
+    });
   };
 
   _displayNextQuote() {
