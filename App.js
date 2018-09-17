@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AsyncStorage, Button, StyleSheet, View } from 'react-native';
+import { AsyncStorage, Button, StyleSheet, Text, View } from 'react-native';
 
 import Quote from './js/components/Quote';
 import NewQuote from './js/components/NewQuote';
@@ -12,22 +12,8 @@ function StyledButton(props) {
   );
 }
 
-const data = [
-  {
-    text:
-      'Probleme kann man niemals mit derselben Denkweise lösen, durch die sie entstanden sind.',
-    author: 'Albert Einstein'
-  },
-  {
-    text:
-      'Man braucht nichts im Leben zu fürchten, man muss nur alles verstehen.',
-    author: 'Marie Curie'
-  },
-  { text: 'Nichts ist so beständig wie der Wandel.', author: 'Heraklit' }
-];
-
 export default class App extends Component {
-  state = { index: 0, showNewQuoteScreen: false, quotes: data };
+  state = { index: 0, showNewQuoteScreen: false, quotes: [] };
 
   _retrieveData = async () => {
     let value = await AsyncStorage.getItem('QUOTES');
@@ -63,7 +49,7 @@ export default class App extends Component {
 
   _deleteButton() {
     let { index, quotes } = this.state;
-    quotes.splice(index, 1); // Lösche das Zitat aus dem Array
+    quotes.splice(index, 1);
     this._storeData(quotes);
     this.setState({ index: 0, quotes });
   }
@@ -75,6 +61,10 @@ export default class App extends Component {
   render() {
     let { index, quotes } = this.state;
     const quote = quotes[index];
+    let content = <Text style={{ fontSize: 36 }}>Keine Zitate</Text>;
+    if (quote) {
+      content = <Quote text={quote.text} author={quote.author} />;
+    }
     return (
       <View style={styles.container}>
         <StyledButton
@@ -91,7 +81,7 @@ export default class App extends Component {
           visible={this.state.showNewQuoteScreen}
           onSave={this._addQuote}
         />
-        <Quote text={quote.text} author={quote.author} />
+        {content}
         <StyledButton
           style={styles.nextButton}
           title="Nächstes Zitat"
