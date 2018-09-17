@@ -61,6 +61,13 @@ export default class App extends Component {
     this.setState({ index: nextIndex });
   }
 
+  _deleteButton() {
+    let { index, quotes } = this.state;
+    quotes.splice(index, 1); // Lösche das Zitat aus dem Array
+    this._storeData(quotes);
+    this.setState({ index: 0, quotes });
+  }
+
   componentDidMount() {
     this._retrieveData();
   }
@@ -70,6 +77,11 @@ export default class App extends Component {
     const quote = quotes[index];
     return (
       <View style={styles.container}>
+        <StyledButton
+          style={styles.deleteButton}
+          title="Löschen"
+          onPress={() => this._deleteButton()}
+        />
         <StyledButton
           style={styles.newButton}
           title="Neu"
@@ -104,6 +116,11 @@ const styles = StyleSheet.create({
   newButton: {
     position: 'absolute',
     right: 0,
+    top: 30
+  },
+  deleteButton: {
+    position: 'absolute',
+    left: 0,
     top: 30
   }
 });
