@@ -5,11 +5,14 @@ import Quote from './js/components/Quote';
 import NewQuote from './js/components/NewQuote';
 
 function StyledButton(props) {
-  return (
-    <View style={props.style}>
-      <Button title={props.title} onPress={props.onPress} />
-    </View>
-  );
+  let button = null;
+  if (props.visible)
+    button = (
+      <View style={props.style}>
+        <Button title={props.title} onPress={props.onPress} />
+      </View>
+    );
+  return button;
 }
 
 export default class App extends Component {
@@ -69,11 +72,13 @@ export default class App extends Component {
       <View style={styles.container}>
         <StyledButton
           style={styles.deleteButton}
+          visible={quotes.length >= 1}
           title="Löschen"
           onPress={() => this._deleteButton()}
         />
         <StyledButton
           style={styles.newButton}
+          visible={true}
           title="Neu"
           onPress={() => this.setState({ showNewQuoteScreen: true })}
         />
@@ -84,6 +89,7 @@ export default class App extends Component {
         {content}
         <StyledButton
           style={styles.nextButton}
+          visible={quotes.length >= 2}
           title="Nächstes Zitat"
           onPress={() => this._displayNextQuote()}
         />
