@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
-import {
-  Alert,
-  AsyncStorage,
-  Button,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { Alert, Button, StyleSheet, Text, View } from 'react-native';
+import { SQLite } from 'expo';
 
 import Quote from './js/components/Quote';
 import NewQuote from './js/components/NewQuote';
+
+const database = SQLite.openDatabase('quotes.db');
 
 function StyledButton(props) {
   let button = null;
@@ -25,23 +21,17 @@ function StyledButton(props) {
 export default class App extends Component {
   state = { index: 0, showNewQuoteScreen: false, quotes: [] };
 
-  _retrieveData = async () => {
-    let value = await AsyncStorage.getItem('QUOTES');
-    if (value !== null) {
-      value = JSON.parse(value);
-      this.setState({ quotes: value });
-    }
-  };
+  _retrieveData = async () => {};
 
-  _storeData(quotes) {
-    AsyncStorage.setItem('QUOTES', JSON.stringify(quotes));
-  }
+  _saveQuoteToDB() {}
+
+  _removeQuoteFromDB() {}
 
   _addQuote = (text, author) => {
+    // TODO: neues Zitat in der DB speichern
     let { quotes } = this.state;
     if (text && author) {
       quotes.push({ text, author });
-      this._storeData(quotes);
     }
     this.setState({
       index: quotes.length - 1,
@@ -73,9 +63,9 @@ export default class App extends Component {
   }
 
   _deleteQuote() {
+    // TODO: Zitat aus DB entfernen
     let { index, quotes } = this.state;
     quotes.splice(index, 1);
-    this._storeData(quotes);
     this.setState({ index: 0, quotes });
   }
 
