@@ -21,17 +21,35 @@ function StyledButton(props) {
 export default class App extends Component {
   state = { index: 0, showNewQuoteScreen: false, quotes: [] };
 
-  _retrieveData = async () => {};
+  _retrieveData() {
+    database.transaction(transaction =>
+      transaction.executeSql('SELECT * FROM quotes', [], (_, result) =>
+        this.setState({ quotes: result.rows._array })
+      )
+    );
+  }
 
-  _saveQuoteToDB() {}
+  _saveQuoteToDB(text, author, quotes) {
+    database.transaction(transaction =>
+      transaction.executeSql(
+        'INSERT INTO quotes (text, author) VALUES (?,?)',
+        [text, author],
+        (_, result) => (quotes[quotes.length - 1].id = result.insertId)
+      )
+    );
+  }
 
-  _removeQuoteFromDB() {}
+  _removeQuoteFromDB(id) {
+    database.transaction(transaction =>
+      transaction.executeSql('DELETE FROM quotes WHERE id = ?', [id])
+    );
+  }
 
   _addQuote = (text, author) => {
-    // TODO: neues Zitat in der DB speichern
     let { quotes } = this.state;
     if (text && author) {
       quotes.push({ text, author });
+      this._saveQuoteToDB(text, author, quotes);
     }
     this.setState({
       index: quotes.length - 1,
@@ -63,13 +81,18 @@ export default class App extends Component {
   }
 
   _deleteQuote() {
-    // TODO: Zitat aus DB entfernen
     let { index, quotes } = this.state;
+    this._removeQuoteFromDB(quotes[index].id);
     quotes.splice(index, 1);
     this.setState({ index: 0, quotes });
   }
 
   componentDidMount() {
+    database.transaction(transaction =>
+      transaction.executeSql(
+        'CREATE TABLE IF NOT EXISTS quotes (id INTEGER PRIMARY KEY NOT NULL, text TEXT, author TEXT);'
+      )
+    );
     this._retrieveData();
   }
 
