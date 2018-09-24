@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Alert, Button, StyleSheet, Text, View } from 'react-native';
-import { SQLite } from 'expo';
 
+import Firebase from './js/Firebase';
 import Quote from './js/components/Quote';
 import NewQuote from './js/components/NewQuote';
-
-const database = SQLite.openDatabase('quotes.db');
 
 function StyledButton(props) {
   let button = null;
@@ -21,28 +19,29 @@ function StyledButton(props) {
 export default class App extends Component {
   state = { index: 0, showNewQuoteScreen: false, quotes: [] };
 
-  _retrieveData() {
-    database.transaction(transaction =>
-      transaction.executeSql('SELECT * FROM quotes', [], (_, result) =>
-        this.setState({ quotes: result.rows._array })
-      )
-    );
-  }
+  _retrieveData = async () => {
+    let quotes = [];
+    let query = await Firebase.db.collection('quotes').get();
+    query.forEach(quote => {
+      quotes.push({
+        id: quote.id,
+        text: quote.data().text,
+        author: quote.data().author
+      });
+    });
+    this.setState({ quotes });
+  };
 
-  _saveQuoteToDB(text, author, quotes) {
-    database.transaction(transaction =>
-      transaction.executeSql(
-        'INSERT INTO quotes (text, author) VALUES (?,?)',
-        [text, author],
-        (_, result) => (quotes[quotes.length - 1].id = result.insertId)
-      )
-    );
-  }
+  _saveQuoteToDB = async (text, author, quotes) => {
+    docRef = await Firebase.db.collection('quotes').add({ text, author });
+    quotes[quotes.length - 1].id = docRef.id;
+  };
 
   _removeQuoteFromDB(id) {
-    database.transaction(transaction =>
-      transaction.executeSql('DELETE FROM quotes WHERE id = ?', [id])
-    );
+    Firebase.db
+      .collection('quotes')
+      .doc(id)
+      .delete();
   }
 
   _addQuote = (text, author) => {
@@ -88,11 +87,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    database.transaction(transaction =>
-      transaction.executeSql(
-        'CREATE TABLE IF NOT EXISTS quotes (id INTEGER PRIMARY KEY NOT NULL, text TEXT, author TEXT);'
-      )
-    );
+    Firebase.init();
     this._retrieveData();
   }
 
