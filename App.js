@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { Alert, Button, StyleSheet, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  Button,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native';
 
 import Firebase from './js/Firebase';
 import Quote from './js/components/Quote';
@@ -17,7 +24,7 @@ function StyledButton(props) {
 }
 
 export default class App extends Component {
-  state = { index: 0, showNewQuoteScreen: false, quotes: [] };
+  state = { index: 0, showNewQuoteScreen: false, quotes: [], isLoading: true };
 
   _retrieveData = async () => {
     let quotes = [];
@@ -29,7 +36,7 @@ export default class App extends Component {
         author: quote.data().author
       });
     });
-    this.setState({ quotes });
+    this.setState({ quotes, isLoading: false });
   };
 
   _saveQuoteToDB = async (text, author, quotes) => {
@@ -92,6 +99,13 @@ export default class App extends Component {
   }
 
   render() {
+    if (this.state.isLoading) {
+      return (
+        <View style={styles.container}>
+          <ActivityIndicator size="large" color="blue" />
+        </View>
+      );
+    }
     let { index, quotes } = this.state;
     const quote = quotes[index];
     let content = <Text style={{ fontSize: 36 }}>Keine Zitate</Text>;
