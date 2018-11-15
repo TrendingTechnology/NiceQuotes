@@ -21,7 +21,7 @@ const config = {
 
 Du findest diese Daten im Überblick deines Firebase-Projekts wie hier beschrieben: https://firebase.google.com/docs/guides/ (Abschnitte „getting started“).
 
-1. React Native Packager starten mit `expo start`
+- React Native Packager starten mit `expo start`
 
 **Achtung: die App funktioniert nur, wenn die Einstellungen für Firebase eingetragen wurden!**
 
