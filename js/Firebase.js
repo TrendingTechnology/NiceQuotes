@@ -8,7 +8,8 @@ const config = {
   databaseURL: 'DATABASEBURL',
   projectId: 'PROJECTID',
   storageBucket: 'STORAGEBUCKET',
-  messagingSenderId: 'MESSAGINGSENDERID'
+  messagingSenderId: 'MESSAGINGSENDERID',
+  appId: 'APPID'
 };
 
 export default class Firebase {
